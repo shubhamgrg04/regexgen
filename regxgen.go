@@ -2,6 +2,8 @@ package regxgen
 
 import "bytes"
 
+
+// generates "count" strings using regular expression specified by "regex"
 func Generate(regex string, count int, config *Config) ([]string, error){
 	pattern := NewPattern(regex)
 	generators, err := pattern.createGenerators()

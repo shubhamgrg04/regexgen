@@ -172,7 +172,7 @@ func (pt *Pattern) parseBrace() (int, int, error) {
 	var buf []rune
 	for {
 		if len(pt.regex)-pt.currentIndex < 1 {
-			return 0,0,fmt.Errorf("bad range %s", buf)
+			return 0,0,fmt.Errorf("bad range %s", string(buf))
 		}
 		char := pt.getCurrentRune()
 		pt.currentIndex++
@@ -189,7 +189,7 @@ func (pt *Pattern) parseBrace() (int, int, error) {
 	if hasComma {
 		limits := strings.Split(string(buf), ",")
 		if len(limits) !=2 {
-			return 0,0,fmt.Errorf("invalid range: {%s}", buf)
+			return 0,0,fmt.Errorf("invalid range: {%s}", string(buf))
 		}
 		var err error
 		min,err = strconv.Atoi(limits[0])
@@ -205,7 +205,7 @@ func (pt *Pattern) parseBrace() (int, int, error) {
 			}
 		}
 		if max < min {
-			return 0,0,fmt.Errorf("bad range {%s}", buf)
+			return 0,0,fmt.Errorf("bad range {%s}", string(buf))
 		}
 	} else {
 		min, _ = strconv.Atoi(string(buf))

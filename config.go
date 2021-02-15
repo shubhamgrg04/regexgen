@@ -10,4 +10,5 @@ func init() {
 
 type Config struct {
 	RepetetionMax int
+	Seed int64
 }

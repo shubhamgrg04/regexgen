@@ -43,6 +43,9 @@ func (generator *Generator) generate(config *Config) (string, error) {
 	if config == nil {
 		return "", fmt.Errorf("config can't be nil while generating strings")
 	}
+	if config.Seed != 0 {
+		rand.Seed(config.Seed)
+	}
 
 	strLen := generator.lengthMin
 	if generator.lengthMax > generator.lengthMin {

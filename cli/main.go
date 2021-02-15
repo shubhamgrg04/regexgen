@@ -10,8 +10,12 @@ import (
 //const pattern = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}"
 const pattern = "[^aeiouAEIOU0-9]{5}"
 func main() {
+	// optional config, can be used to define
 	config := regxgen.Config{
+		//max occurences in case of * & +
 		RepetetionMax: 10,
+		// optional Seed to get non-random strings
+		// Seed: 5,
 	}
 	strings, err := regxgen.Generate(pattern, 200, &config)
 	if err != nil {
