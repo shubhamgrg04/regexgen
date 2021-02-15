@@ -4,10 +4,10 @@ var DEFAULT_CONFIG Config
 
 func init() {
 	DEFAULT_CONFIG = Config{
-		repetetionMax: 5,
+		RepetetionMax: 5,
 	}
 }
 
 type Config struct {
-	repetetionMax int
+	RepetetionMax int
 }

@@ -1,8 +1,12 @@
 package regxgen
 
-import "testing"
+import (
+	"math/rand"
+	"testing"
+)
 
 func TestGenerate(t *testing.T) {
+	rand.Seed(10)
 	gen := Generator{
 		chars:     nil,
 		lengthMax: 1,

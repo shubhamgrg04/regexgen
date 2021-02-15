@@ -2,8 +2,9 @@ package regxgen
 
 import "bytes"
 
-func Generate(pattern string, count int, config *Config) ([]string, error){
-	generators, err := parsePattern(pattern)
+func Generate(regex string, count int, config *Config) ([]string, error){
+	pattern := NewPattern(regex)
+	generators, err := pattern.createGenerators()
 	if err != nil {
 		return nil, err
 	}

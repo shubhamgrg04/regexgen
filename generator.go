@@ -4,7 +4,12 @@ import (
 	"bytes"
 	"fmt"
 	"math/rand"
+	"time"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 type Generator struct {
 	chars []rune
@@ -12,25 +17,41 @@ type Generator struct {
 	lengthMin int
 }
 
+func NewGenerator(chars []rune) Generator {
+	return Generator{
+		chars:     chars,
+		lengthMax: 1,
+		lengthMin: 1,
+	}
+}
+
 func (generator *Generator) appendChar(char rune) {
 	generator.chars = append(generator.chars, char)
 }
 
+func (generator *Generator) setLengthLimits(min,max int) {
+	generator.lengthMin, generator.lengthMax = min, max
+}
 
 func (generator *Generator) generate(config *Config) (string, error) {
-	//if generator.chars == nil {
-	//	return "", fmt.Errorf("chars array cannot be empty")
-	//}
+	if generator.lengthMax == INFINITE {
+		generator.lengthMax = config.RepetetionMax
+	}
 	if generator.lengthMin > generator.lengthMax {
 		return "", fmt.Errorf("lengthMin should not be greater that lengthMax")
 	}
 	if config == nil {
-		return "", fmt.Errorf("config is nil")
+		return "", fmt.Errorf("config can't be nil while generating strings")
 	}
-	if generator.lengthMax == -1 {
-		generator.lengthMax = config.repetetionMax
+
+	strLen := generator.lengthMin
+	if generator.lengthMax > generator.lengthMin {
+		strLen = strLen + rand.Intn(generator.lengthMax - generator.lengthMin)
+		if generator.lengthMin == 0 && generator.lengthMax == 1 {
+			strLen++
+		}
 	}
-	strLen := rand.Intn(generator.lengthMax - generator.lengthMin) + generator.lengthMin
+
 	nChars := len(generator.chars)
 	var result bytes.Buffer
 	for ; strLen > 0; strLen-- {
